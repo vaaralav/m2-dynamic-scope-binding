@@ -1,0 +1,37 @@
+<h1>This is my template, there are many like it, but this one is mine.</h1>
+<div data-bind="scope: 'foobar'"><input type="text" data-bind="attr: {value: $t('sparta')}"/></div>
+<script type="text/x-magento-init">
+{
+  "*": {
+    "Magento_Ui/js/core/app": {
+      "components": {
+        "foobar": {
+	  "component": "Vaaralav_HelloWorld/example"
+	}
+      }
+    }
+  }
+}
+</script>
+
+<div id="foobar"></div>
+<script>
+require(['ko', 'Magento_Ui/js/lib/knockout/bootstrap'], function (ko) {
+  function createContent(){
+    console.log('Creating content...');
+    const div = document.getElementById('foobar');
+    div.innerHTML = `
+    <div data-bind="scope: 'foobar'">
+      <input type="text" data-bind="attr: {placeholder: $t('Pickup location')}" />
+    </div>
+   `;
+    ko.cleanNode(div);
+    ko.applyBindings(undefined, div);
+    console.log('Done!');
+  }
+
+  createContent();
+
+  setTimeout(createContent, 5000);
+});
+</script>
