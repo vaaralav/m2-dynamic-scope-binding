@@ -1,3 +1,16 @@
 <h1>This is <span data-bind="text: $t('sparta')"></span></h1>
 <pre data-bind="text: ko.toJSON(foo)"></pre>
 <pre data-bind="text: ko.toJSON(foobar)"></pre>
+<hr />
+<!-- Scope binding child; No displayArea required -->
+<div data-bind="scope: requestChild('child_a')"><!-- ko template: getTemplate() --> <!-- /ko --></div>
+<hr />
+<!-- Using getRegion(); Requires displayArea -->
+<!-- ko foreach: getRegion('child_a') -->
+<!-- ko template: getTemplate() --><!-- /ko -->
+<!-- /ko -->
+<hr />
+<!-- render all the children, no need to know names -->
+<!-- ko foreach: elems() -->
+<!-- ko template: getTemplate() -->
+<!-- /ko -->
