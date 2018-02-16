@@ -13,7 +13,6 @@
 <div id="foobar">
 Here comes content...
 </div>
-<div data-bind="scope: 'sparta2'"><!-- ko template: getTemplate() --><!-- /ko --></div>
 <div id="sparta" data-bind="scope: 'sparta'">
   <h2>This is sparta scoped</h2>
   <input type="text" data-bind="attr: {value: answer}"/>
@@ -38,5 +37,55 @@ require(['ko'/*, 'Magento_Ui/js/lib/knockout/bootstrap'*/], function (ko) {
   //createContent();
 
   setTimeout(createContent, 5000);
+});
+</script>
+
+<style>
+#root {
+  background: #aaeeff;
+}
+</style>
+<div id="root"></div>
+<script>
+require.config({
+  paths: {
+    'react': 'https://unpkg.com/react@16/umd/react.development',
+    'react-dom': 'https://unpkg.com/react-dom@16/umd/react-dom.development',
+    'createReactClass': 'https://unpkg.com/create-react-class@15.6.3/create-react-class',
+  }
+})
+require(['react', 'react-dom', 'createReactClass', 'knockout', 'Magento_Ui/js/lib/knockout/bootstrap'], function(React, ReactDOM, createClass, ko) {
+
+  var KoBinder = createClass({
+    componentDidMount: function() {
+      // Bind if the wrapper doesn't already have binding
+      if (!ko.dataFor(this.refs.thing)) {
+        ko.applyBindings(undefined, this.refs.thing);
+      }
+
+    },
+    render: function() {
+      return React.createElement(
+        'div',
+        {
+          ref: 'thing',
+          "data-bind": `scope: ${JSON.stringify(this.props.scope)}`,
+          dangerouslySetInnerHTML:{__html: `<!-- ko template: getTemplate() --><!-- /ko -->`}
+        }
+      );
+    }
+  });
+  function renderApp() {
+    console.log('Hello from React');
+    ReactDOM.render(
+      React.createElement('div', null,
+        React.createElement('h1', null, 'Hello from React'),
+        React.createElement(KoBinder, {scope: 'sparta2'}, 'Hello, world!'),
+      ),
+      document.getElementById('root')
+    );
+  }
+  renderApp();
+  setTimeout(renderApp, 5000);
 });
 </script>
