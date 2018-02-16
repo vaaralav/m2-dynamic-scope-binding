@@ -6,9 +6,14 @@
   }
 }
 </script>
+<div data-bind="scope: '42'">
+  <h3>Scope: '42'</h3>
+<span data-bind="text: foo"></span>
+</div>
 <div id="foobar">
 Here comes content...
 </div>
+<div data-bind="scope: 'sparta2'"><!-- ko template: getTemplate() --><!-- /ko --></div>
 <div id="sparta" data-bind="scope: 'sparta'">
   <h2>This is sparta scoped</h2>
   <input type="text" data-bind="attr: {value: answer}"/>
